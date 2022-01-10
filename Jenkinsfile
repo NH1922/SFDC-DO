@@ -57,7 +57,7 @@ node {
             //    rmsg = bat returnStdout: true, script : "${toolbelt} force:source:convert -d mdapioutput/"
             //    rmsg = bat returnStdout: true, script : "${toolbelt} force:mdapi:deploy -u ${HUB_ORG} -d mdapioutput/ --checkonly --wait -1"
                 println('generating file')
-                rmsg = bat returnStdout: true, script : "${toolbelt} sgd:source:delta --to "HEAD" --from "HEAD^" --output \".\""
+                rmsg = bat returnStdout: true, script : "${toolbelt} sgd:source:delta --to \"HEAD\" --from \"HEAD^\" --output \".\""
                 printf(rmsg)
                 println('package generated')
                 bat "type package/package.xml"
