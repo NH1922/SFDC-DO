@@ -32,7 +32,7 @@ node {
             }else{
 		    //bat "${toolbelt} plugins:install salesforcedx@49.5.0"
 		    bat "${toolbelt} update"
-            bat "echo 'y' | ${toolbelt} plugins:install sfdx-git-delta"
+            bat "echo y | ${toolbelt} plugins:install sfdx-git-delta"
 		    //bat "${toolbelt} auth:logout -u ${HUB_ORG} -p" 
                  rc = bat returnStatus: true, script: "${toolbelt} auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile \"${jwt_key_file}\" --loglevel DEBUG --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
             }
