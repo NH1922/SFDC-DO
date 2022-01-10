@@ -1,0 +1,26 @@
+{
+  "orgName": "NH_TH",
+  "sourceOrg": "00D2v00000289iN",
+  "features": [
+    "EnableSetPasswordInApi",
+    "RecordTypes",
+    "ServiceCloud",
+    "MarketingUser",
+    "LightningSalesConsole",
+    "LightningScheduler",
+    "OrderManagement",
+    "SecurityEventEnabled",
+    "PlatformEncryption",
+    "Knowledge",
+    "StreamingAPI",
+    "ChangeDataCapture"
+  ],
+  "settings": {
+    "lightningExperienceSettings": {
+      "enableS1DesktopEnabled": true
+    },
+    "mobileSettings": {
+      "enableS1EncryptedStoragePref2": false
+    }
+  }
+}
