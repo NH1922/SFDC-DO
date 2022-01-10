@@ -60,7 +60,7 @@ node {
                 rmsg = bat returnStdout: true, script : "${toolbelt} sgd:source:delta --to \"HEAD\" --from \"HEAD^\" --output \".\""
                 printf(rmsg)
                 println('package generated')
-                bat "type package/package.xml"
+                bat "type .\\package\\package.xml"
                 rmsg = bat returnStdout: true, script : "${toolbelt} force:source:deploy -x package/package.xml"
                 println('After deployment')
                 printf(rmsg)
