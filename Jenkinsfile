@@ -32,6 +32,7 @@ node {
             }else{
 		    //bat "${toolbelt} plugins:install salesforcedx@49.5.0"
 		    bat "${toolbelt} update"
+            bat "${toolbelt} plugins:install sfdx-git-delta"
 		    //bat "${toolbelt} auth:logout -u ${HUB_ORG} -p" 
                  rc = bat returnStatus: true, script: "${toolbelt} auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile \"${jwt_key_file}\" --loglevel DEBUG --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
             }
@@ -53,25 +54,37 @@ node {
 			}else{
 				// rmsg = bat returnStdout: true, script: "${toolbelt} force:source:deploy -x manifest/package.xml -u ${HUB_ORG}"
 			   //rmsg = bat returnStdout: true, script: "${toolbelt} force:mdapi:deploy -d manifest/. -u ${HUB_ORG}"
-               rmsg = bat returnStdout: true, script : "${toolbelt} force:source:convert -d mdapioutput/"
-               rmsg = bat returnStdout: true, script : "${toolbelt} force:mdapi:deploy -u ${HUB_ORG} -d mdapioutput/ --checkonly --wait -1"
-			}
+            //    rmsg = bat returnStdout: true, script : "${toolbelt} force:source:convert -d mdapioutput/"
+            //    rmsg = bat returnStdout: true, script : "${toolbelt} force:mdapi:deploy -u ${HUB_ORG} -d mdapioutput/ --checkonly --wait -1"
+                println('generating file')
+                rmsg = bat returnStdout: true, script : "${toolbelt} sgd:source:delta --to "HEAD" --from "HEAD^" --output \".\""
+                printf(rmsg)
+                println('package generated')
+                bat "type package/package.xml"
+                rmsg = bat returnStdout: true, script : "${toolbelt} force:source:deploy -x package/package.xml"
+                println('After deployment')
+                printf(rmsg)
+
+
+
+
+            }
 			  
             printf rmsg
             println('Hello from a Job DSL script!')
             println(rmsg)
         }
 
-        stage('Run Tests'){
-            if(isUnix()){
-                // rTestMsg = sh returnStdout: true, script: "${toolbelt} force:apex:test:run"
-            }else{
-                bat "${toolbelt} update"
-                rc = bat returnStatus: true, script: "${toolbelt} auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile \"${jwt_key_file}\" --loglevel DEBUG --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
-                if(rc == 0){
-                    rTestMsg = bat returnStatus: true, script: "${toolbelt} force:apex:test:run -u ${HUB_ORG}"
-                }
-            }
-        }
+        // stage('Run Tests'){
+        //     if(isUnix()){
+        //         // rTestMsg = sh returnStdout: true, script: "${toolbelt} force:apex:test:run"
+        //     }else{
+        //         bat "${toolbelt} update"
+        //         rc = bat returnStatus: true, script: "${toolbelt} auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile \"${jwt_key_file}\" --loglevel DEBUG --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
+        //         if(rc == 0){
+        //             rTestMsg = bat returnStatus: true, script: "${toolbelt} force:apex:test:run -u ${HUB_ORG}"
+        //         }
+        //     }
+        // }
     }
 }
