@@ -61,7 +61,7 @@ node {
                 printf(rmsg)
                 println('package generated')
                 bat "type .\\package\\package.xml"
-                rmsg = bat returnStdout: true, script : "${toolbelt} force:source:deploy -x package/package.xml"
+                rmsg = bat returnStdout: true, script : "${toolbelt} force:source:deploy -x package/package.xml -u ${HUB_ORG}"
                 println('After deployment')
                 printf(rmsg)
 
