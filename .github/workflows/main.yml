@@ -40,6 +40,7 @@ jobs:
        npm install sfdx-cli
        node_modules/sfdx-cli/bin/run --version
        node_modules/sfdx-cli/bin/run plugins --core
+       sfdx plugins:install sfdx-git-delta
 
 
  # Runs a set of commands using the runners shell
